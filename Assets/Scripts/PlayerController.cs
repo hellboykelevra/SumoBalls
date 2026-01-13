@@ -3,6 +3,10 @@ using UnityEngine;
 public class MovimientoBola2D : MonoBehaviour
 {
     public float fuerzaMovimiento = 5f;
+    bool canJump = false;
+
+    [HideInInspector]
+    public bool estaVivo = true;
 
     public enum TipoControl
     {
@@ -22,23 +26,59 @@ public class MovimientoBola2D : MonoBehaviour
 
     void FixedUpdate()
     {
-        float inputHorizontal = 0f;
-        float inputVertical = 0f;
+        if (!estaVivo) return;
 
-        // Selección del tipo de control
+        float inputHorizontal = 0f;
+
         if (tipoControl == TipoControl.WASD)
         {
-            inputHorizontal = (Input.GetKey(KeyCode.A) ? -1 : 0) + (Input.GetKey(KeyCode.D) ? 1 : 0);
-            inputVertical = (Input.GetKey(KeyCode.W) ? 1 : 0) + (Input.GetKey(KeyCode.S) ? -1 : 0);
+            inputHorizontal = (Input.GetKey(KeyCode.A) ? -1 : 0) +
+                              (Input.GetKey(KeyCode.D) ? 1 : 0);
+
+            if (canJump && Input.GetKey(KeyCode.W))
+            {
+                rb.linearVelocityY = 0f;
+                rb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse);
+                canJump = false;
+            }
         }
-        else if (tipoControl == TipoControl.Flechas)
+        else
         {
-            inputHorizontal = (Input.GetKey(KeyCode.LeftArrow) ? -1 : 0) + (Input.GetKey(KeyCode.RightArrow) ? 1 : 0);
-            inputVertical = (Input.GetKey(KeyCode.UpArrow) ? 1 : 0) + (Input.GetKey(KeyCode.DownArrow) ? -1 : 0);
+            inputHorizontal = (Input.GetKey(KeyCode.LeftArrow) ? -1 : 0) +
+                              (Input.GetKey(KeyCode.RightArrow) ? 1 : 0);
+
+            if (canJump && Input.GetKey(KeyCode.UpArrow))
+            {
+                rb.linearVelocityY = 0f;
+                rb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse);
+                canJump = false;
+            }
         }
 
-        Vector2 direccionMovimiento = new Vector2(inputHorizontal, inputVertical);
+        rb.AddForce(Vector2.right * inputHorizontal * fuerzaMovimiento);
+    }
 
-        rb.AddForce(direccionMovimiento * fuerzaMovimiento);
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("DeadBarrier"))
+        {
+            estaVivo = false;
+            rb.linearVelocity = Vector2.zero;
+            rb.simulated = false; 
+            return;
+        }
+
+        if (!collision.CompareTag("Player"))
+        {
+            canJump = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Player"))
+        {
+            canJump = false;
+        }
     }
 }
