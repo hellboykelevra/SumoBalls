@@ -314,6 +314,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7529683011556467301, guid: e3be93615c92d324f85c9240b4c953db, type: 3}
+      propertyPath: onActivate.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529683011556467301, guid: e3be93615c92d324f85c9240b4c953db, type: 3}
+      propertyPath: onActivate.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3572053507802170714}
+    - target: {fileID: 7529683011556467301, guid: e3be93615c92d324f85c9240b4c953db, type: 3}
+      propertyPath: onActivate.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529683011556467301, guid: e3be93615c92d324f85c9240b4c953db, type: 3}
+      propertyPath: onActivate.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PowerupActivated
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529683011556467301, guid: e3be93615c92d324f85c9240b4c953db, type: 3}
+      propertyPath: onActivate.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Powerup_InverseControls, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7529683011556467301, guid: e3be93615c92d324f85c9240b4c953db, type: 3}
+      propertyPath: onActivate.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -324,6 +348,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4112878122490497363}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 740635222740583801, guid: e3be93615c92d324f85c9240b4c953db, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 3572053507802170714}
     - targetCorrespondingSourceObject: {fileID: 740635222740583801, guid: e3be93615c92d324f85c9240b4c953db, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1308130309000263764}
@@ -341,6 +368,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 740635222740583801, guid: e3be93615c92d324f85c9240b4c953db, type: 3}
   m_PrefabInstance: {fileID: 2343750786029989362}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3572053507802170714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081006556062705803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 019072630cb133f4cbd4e2fa999ee8a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &-1308130309000263764
 Rigidbody2D:
   serializedVersion: 5
