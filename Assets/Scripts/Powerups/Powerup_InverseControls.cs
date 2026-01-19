@@ -4,7 +4,7 @@ public class Powerup_InverseControls : MonoBehaviour
 {
     public void PowerupActivated(GameObject player)
     {
-        Debug.Log("Powerup Obtained by: " + player.name);
-        Destroy(gameObject);
+        if (player.CompareTag("PlayerA")) GameObject.FindGameObjectsWithTag("PlayerB");
+        else GameObject.FindGameObjectsWithTag("PlayerA");
     }
 }
