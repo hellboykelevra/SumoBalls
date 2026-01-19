@@ -1,12 +1,18 @@
+using NUnit.Framework.Constraints;
+using System.Collections;
 using UnityEngine;
 
 public class MovimientoBola2D : MonoBehaviour
 {
+    [Header("Players")]
+    public GameObject enemyBall;
+
     public float fuerzaMovimiento = 5f;
     bool canJump = false;
 
     [HideInInspector]
     public bool estaVivo = true;
+    private bool hasInversedControls = false;
 
     public enum TipoControl
     {
@@ -55,6 +61,8 @@ public class MovimientoBola2D : MonoBehaviour
             }
         }
 
+        if(hasInversedControls) inputHorizontal *= -1;
+        
         rb.AddForce(Vector2.right * inputHorizontal * fuerzaMovimiento);
     }
 
@@ -80,5 +88,18 @@ public class MovimientoBola2D : MonoBehaviour
         {
             canJump = false;
         }
+    }
+
+    public void InverseControls()
+    {
+        hasInversedControls = true;
+        StartCoroutine("InverseControlsTimer");
+    }
+
+    IEnumerator InverseControlsTimer()
+    {
+        yield return new WaitForSeconds(5f);
+
+        hasInversedControls = false;
     }
 }
