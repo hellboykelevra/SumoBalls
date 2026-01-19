@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Bola
+  - BallR
+  - BallL
+  - BallB
   layers:
   - Default
   - TransparentFX

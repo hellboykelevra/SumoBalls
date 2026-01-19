@@ -132,9 +132,10 @@ GameObject:
   - component: {fileID: 44124040}
   - component: {fileID: 44124039}
   - component: {fileID: 44124038}
+  - component: {fileID: 44124043}
   m_Layer: 0
   m_Name: Redplayer
-  m_TagString: Bola
+  m_TagString: BallR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -286,6 +287,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44124043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44124037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b3eb2b00ad8d442bfe6aecfb296f60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energy: 0
 --- !u!1 &59611299
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +316,7 @@ GameObject:
   - component: {fileID: 59611305}
   m_Layer: 0
   m_Name: Blueplayer
-  m_TagString: Bola
+  m_TagString: BallB
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -466,7 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b3eb2b00ad8d442bfe6aecfb296f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuerza: 10
+  energy: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
