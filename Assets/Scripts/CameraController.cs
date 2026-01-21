@@ -15,14 +15,21 @@ public class CameraController : MonoBehaviour
     public float tiempoParaInvertir = 15f;
     public float duracionAnimacion = 2f;
 
+    [Header("UI - Temporizador")]
+    public TimerUI timerUI; // Referencia al script del temporizador (TMP_Text dentro de TimerUI)
+
     private Quaternion rotacionOriginal;
     private Quaternion rotacionInvertida;
 
     void Start()
     {
+        // Guarda la rotación inicial
         rotacionOriginal = transform.rotation;
+
+        // Calcula la rotación invertida
         rotacionInvertida = Quaternion.Euler(0f, 0f, 180f) * rotacionOriginal;
 
+        // Inicia el bucle principal
         StartCoroutine(BucleCamara());
     }
 
@@ -31,9 +38,11 @@ public class CameraController : MonoBehaviour
         if (objetoA == null || objetoB == null)
             return;
 
+        // Calcula el punto medio entre los objetos
         Vector3 puntoMedio = (objetoA.position + objetoB.position) / 2f;
         puntoMedio.z = distanciaZ;
 
+        // Mueve la cámara suavemente
         transform.position = Vector3.Lerp(
             transform.position,
             puntoMedio,
@@ -45,6 +54,10 @@ public class CameraController : MonoBehaviour
     {
         while (true)
         {
+            // 🔔 Inicia temporizador antes de invertir la cámara
+            if (timerUI != null)
+                timerUI.IniciarTemporizador(tiempoParaInvertir);
+
             // Espera antes de invertir
             yield return new WaitForSeconds(tiempoParaInvertir);
 
@@ -52,6 +65,10 @@ public class CameraController : MonoBehaviour
             yield return StartCoroutine(
                 CambiarRotacion(rotacionOriginal, rotacionInvertida)
             );
+
+            // 🔔 Inicia temporizador para el regreso
+            if (timerUI != null)
+                timerUI.IniciarTemporizador(tiempoParaInvertir * 2f);
 
             // Espera el doble de tiempo
             yield return new WaitForSeconds(tiempoParaInvertir * 2f);
@@ -74,7 +91,7 @@ public class CameraController : MonoBehaviour
             yield break;
         }
 
-        // 🌀 Suave
+        // 🌀 Cambio suave
         float t = 0f;
         while (t < 1f)
         {
