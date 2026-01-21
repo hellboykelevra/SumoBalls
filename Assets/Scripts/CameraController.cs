@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
@@ -6,22 +7,82 @@ public class CameraController : MonoBehaviour
     public Transform objetoA;
     public Transform objetoB;
 
-    [Header("Ajustes de c�mara")]
+    [Header("Ajustes de cámara")]
     public float suavizado = 5f;
-    public float distanciaZ = -10f; // Mantiene la c�mara en Z negativa
+    public float distanciaZ = -10f;
+
+    [Header("Inversión de cámara")]
+    public float tiempoParaInvertir = 15f;
+    public float duracionAnimacion = 2f;
+
+    private Quaternion rotacionOriginal;
+    private Quaternion rotacionInvertida;
+
+    void Start()
+    {
+        rotacionOriginal = transform.rotation;
+        rotacionInvertida = Quaternion.Euler(0f, 0f, 180f) * rotacionOriginal;
+
+        StartCoroutine(BucleCamara());
+    }
 
     void LateUpdate()
     {
         if (objetoA == null || objetoB == null)
             return;
 
-        // Calcular punto medio
         Vector3 puntoMedio = (objetoA.position + objetoB.position) / 2f;
-
-        // Mantener Z estable para la c�mara 2D
         puntoMedio.z = distanciaZ;
 
-        // Movimiento suave
-        transform.position = Vector3.Lerp(transform.position, puntoMedio, Time.deltaTime * suavizado);
+        transform.position = Vector3.Lerp(
+            transform.position,
+            puntoMedio,
+            Time.deltaTime * suavizado
+        );
+    }
+
+    IEnumerator BucleCamara()
+    {
+        while (true)
+        {
+            // Espera antes de invertir
+            yield return new WaitForSeconds(tiempoParaInvertir);
+
+            // 🔀 Inversión aleatoria
+            yield return StartCoroutine(
+                CambiarRotacion(rotacionOriginal, rotacionInvertida)
+            );
+
+            // Espera el doble de tiempo
+            yield return new WaitForSeconds(tiempoParaInvertir * 2f);
+
+            // 🔀 Regreso aleatorio
+            yield return StartCoroutine(
+                CambiarRotacion(rotacionInvertida, rotacionOriginal)
+            );
+        }
+    }
+
+    IEnumerator CambiarRotacion(Quaternion desde, Quaternion hasta)
+    {
+        bool suave = Random.value > 0.5f; // 🎲 50% probabilidad
+
+        if (!suave)
+        {
+            // ⚡ Instantáneo
+            transform.rotation = hasta;
+            yield break;
+        }
+
+        // 🌀 Suave
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / duracionAnimacion;
+            transform.rotation = Quaternion.Slerp(desde, hasta, t);
+            yield return null;
+        }
+
+        transform.rotation = hasta;
     }
 }
